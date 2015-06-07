@@ -1,0 +1,8 @@
+version = "%{polyglot:version}%"
+description = "HTML5 polyglot markup filters"
+requires = "xmlm"
+archive(byte) = "polyglot.cma"
+archive(byte, plugin) = "polyglot.cma"
+archive(native) = "polyglot.cmxa"
+archive(native, plugin) = "polyglot.cmxs"
+exists_if = "polyglot.cma"

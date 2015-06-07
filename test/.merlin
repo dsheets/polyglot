@@ -1,0 +1,9 @@
+REC
+
+PKG ounit
+PKG alcotest
+
+S .
+S lib
+B _build/
+B _build/lib
