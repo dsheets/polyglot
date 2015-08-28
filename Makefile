@@ -1,4 +1,5 @@
-PRODUCTS=polyglot.cma polyglot.cmxa polyglot.cmxs polyglot.cmi polyglot.cmti
+PRODUCTS=polyglot.cma polyglot.cmxa polyglot.cmxs polyglot.cmi polyglot.cmti \
+polyglot.a
 .PHONY: all lib tool install clean polyglot_main.native $(PRODUCTS) test
 
 OCAMLBUILD=ocamlbuild -use-ocamlfind -cflags -w,@f@p@u@y,-bin-annot -Is cli,lib
