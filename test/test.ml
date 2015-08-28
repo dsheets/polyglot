@@ -101,6 +101,14 @@ Alcotest.run "polyglot" [
     "keep_dtd";
     "void";
     "nonvoid";
+    "fragment";
+  ];
+  "Detect", success_tests [
+    "detect_no_dtd";
+    "detect_fragment";
+    "detect_nonstandard_html";
+    "detect_no_dtd_xml";
+    "detect_dtd_xml";
   ];
   "Error", error_tests [
     "empty";

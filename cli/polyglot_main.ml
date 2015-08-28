@@ -30,10 +30,13 @@ let fatal_polyglot_error file err =
   exit 1
 *)
 
-let filter () =
+let filter detect =
   let input = Xmlm.make_input (`Channel stdin) in
+  let doc_fn = Polyglot.Stream.(
+    if detect then smart_output_doc else output_doc
+  ) in
   try
-    Polyglot.Stream.output_doc ~nl:true (`Channel stdout)
+    doc_fn ~nl:true (`Channel stdout)
       (fun input ->
          if Xmlm.eoi input
          then None
@@ -47,13 +50,19 @@ let filter () =
 
 let filter_cmd =
   let doc = "polyglot HTML filter" in
+  let detect = Arg.(
+    value & flag & info ["detect"]
+      ~docv:"DETECT"
+      ~doc:"If enabled, only complete HTML documents will be converted to \
+            polyglot HTML5. All other XML documents will remain unchanged."
+  ) in
   let man = [
     `S "DESCRIPTION";
     `P ("$(b, "^exec_name^") converts XHTML into polyglot HTML5.");
   ]
   in
   Term.(
-    ret (pure filter $ pure ()),
+    ret (pure filter $ detect),
     info exec_name ~version ~doc ~man
   )
 
