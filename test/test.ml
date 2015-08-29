@@ -102,6 +102,7 @@ Alcotest.run "polyglot" [
     "void";
     "nonvoid";
     "fragment";
+    "other_ns";
   ];
   "Detect", success_tests [
     "detect_no_dtd";

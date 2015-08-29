@@ -64,7 +64,8 @@ module Stream = struct
         Some ({ c with acc; last = Other }, `El_end)
       | Some (acc, `El_end) ->
         Some ({ c with acc; last = Ending }, `Data "")
-      | Some (acc, (`El_start ((_, tag),_) as start)) ->
+      | Some (acc, (`El_start ((ns, tag),_) as start))
+        when is_html_namespace ns ->
         Some ({ c with acc; last = Start tag }, start)
       | Some (acc, signal) -> Some ({ c with acc; last = Other }, signal)
       | None -> None
@@ -72,10 +73,11 @@ module Stream = struct
     | { acc; last = Other } as c -> match stream acc with
       | Some (acc, `Dtd None) when dtd <> None ->
         Some ({ c with acc; last = Other }, `Dtd dtd)
-      | Some (acc, ((`Data _ | `Dtd _ | `El_end) as s)) ->
-        Some ({ c with acc; last = Other }, s)
-      | Some (acc, (`El_start ((_, tag),_) as start)) ->
+      | Some (acc, (`El_start ((ns, tag),_) as start))
+        when is_html_namespace ns ->
         Some ({ c with acc; last = Start tag }, start)
+      | Some (acc, ((`Data _ | `Dtd _ | `El_end | `El_start _) as s)) ->
+        Some ({ c with acc; last = Other }, s)
       | None -> None
 
   let push_signals ctxt signals =
