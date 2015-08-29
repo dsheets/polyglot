@@ -31,4 +31,4 @@ depopts: [
   "cmdliner"
   "base-unix"
 ]
-available: [ ocaml-version >= "4.00.0" ]
+available: [ ocaml-version >= "4.00.0" & opam-version >= "1.2" ]
