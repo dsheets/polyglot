@@ -82,7 +82,7 @@ module Stream = struct
     let rec stream ctxt = match ctxt.c.stream ctxt with
       | Some ({ c; acc = _::_ } as ctxt, signal) ->
         Xmlm.output c.out signal; stream ctxt
-      | Some ({ c; acc = [] }, signal) ->
+      | Some ({ c; acc = [] } as ctxt, signal) ->
         Xmlm.output c.out signal; ctxt
       | None -> ctxt
     in
