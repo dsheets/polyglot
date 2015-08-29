@@ -184,10 +184,14 @@ module Tree = struct
       let signals = (`El_start tag)::signals in
       let signals = List.fold_left generate_signals signals children in
       match signals with
-      | `El_start ((_, tag),_) :: _ when List.mem tag void_elements ->
+      | `El_start ((ns, tag),_) :: _
+        when List.mem tag void_elements && is_html_namespace ns ->
         `El_end::signals
       | [] | (`Data _ | `Dtd _ | `El_end)::_ -> `El_end::signals
-      | `El_start _ :: _ -> `El_end::(`Data "")::signals
+      | `El_start ((ns,_),_) :: _ when is_html_namespace ns ->
+        `El_end::(`Data "")::signals
+      | `El_start _ :: _ ->
+        `El_end::signals
 
   let output ?(nl=false) ?(indent=None) ?(ns_prefix=fun _ -> None) dest t =
     let append tree =
